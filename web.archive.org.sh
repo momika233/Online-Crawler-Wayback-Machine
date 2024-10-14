@@ -21,11 +21,12 @@ echo "Response (First 10 characters):"
 echo "${response:0:10}"
 
 # Process the response using jq, checking and extracting links containing the specified domain name
-echo "$response" | jq -r '.[] | select(type == "array") | .[0]' | grep "$DOMAIN" > "$output_file"
+echo "$response" | jq -r '.[] | select(type == "array") | .[0]' | grep "$DOMAIN" > "$DOMAIN_temp.txt"
 
 # The saving success message is displayed
 echo "The extracted link has been saved to $output_file"
 
 # Filter duplicate links
-cat "$output_file" | uro > "$DOMAIN_url.txt"
-rm -rf "$output_file"
+cat "$DOMAIN_temp.txt" | uro > "$DOMAIN.txt"
+
+rm -rf "$DOMAIN_temp.txt"
